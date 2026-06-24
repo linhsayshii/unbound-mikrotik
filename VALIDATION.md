@@ -14,6 +14,8 @@ GitHub Actions artifacts download as `.zip`. Extract the `.zip` on your computer
 disk1/unbound-mikrotik-linux-arm64.tar
 ```
 
+Do not upload the GitHub artifact `.zip` to RouterOS. If RouterOS logs `download/extract error: could not load next layer`, first confirm the uploaded file is the `.tar` inside the artifact and that the upload completed fully.
+
 ## 2. RouterOS prerequisites
 
 ```routeros

@@ -41,6 +41,12 @@ Upload the `.tar` to the router with Winbox **Files**, preferably onto external 
 
 GitHub downloads artifacts as `.zip` files. Extract the `.zip` on your computer first, then upload the contained `.tar` to Winbox **Files**.
 
+Do not upload the GitHub `.zip` file to RouterOS. The file in Winbox **Files** must be the Docker archive itself, for example:
+
+```text
+disk1/unbound-mikrotik-linux-arm64.tar
+```
+
 When pushing a tag like `v1.0.0`, the workflow also publishes the `.tar` files and checksums as GitHub Release assets.
 
 Optional registry pull from RouterOS:

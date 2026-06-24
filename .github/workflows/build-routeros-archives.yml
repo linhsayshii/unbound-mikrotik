@@ -41,15 +41,26 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Build Docker archive
+      - name: Build and load image
         uses: docker/build-push-action@v6
         with:
           context: .
           platforms: ${{ matrix.platform }}
           tags: unbound-mikrotik:${{ matrix.arch }}
-          outputs: type=docker,dest=${{ matrix.archive }}
+          load: true
           provenance: false
           sbom: false
+
+      - name: Validate image config
+        run: docker run --rm --platform "${{ matrix.platform }}" --entrypoint unbound-checkconf unbound-mikrotik:${{ matrix.arch }} /etc/unbound/unbound.conf
+
+      - name: Save Docker archive
+        run: docker save unbound-mikrotik:${{ matrix.arch }} -o "${{ matrix.archive }}"
+
+      - name: Inspect archive layout
+        run: |
+          tar -tf "${{ matrix.archive }}" | head -50
+          tar -tf "${{ matrix.archive }}" | grep -q '^manifest.json$'
 
       - name: Generate checksum
         run: sha256sum "${{ matrix.archive }}" > "${{ matrix.archive }}.sha256"

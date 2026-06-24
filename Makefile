@@ -9,7 +9,8 @@ build:
 	docker buildx build --platform $(PLATFORM) --load -t $(IMAGE):$(TAG) .
 
 archive:
-	docker buildx build --platform $(PLATFORM) --output type=docker,dest=$(ARCHIVE) -t $(IMAGE):$(TAG) .
+	docker buildx build --platform $(PLATFORM) --load -t $(IMAGE):$(TAG) .
+	docker save $(IMAGE):$(TAG) -o $(ARCHIVE)
 
 save:
 	docker save $(IMAGE):$(TAG) -o $(ARCHIVE)
